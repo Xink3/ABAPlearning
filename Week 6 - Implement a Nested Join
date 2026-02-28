@@ -1,0 +1,47 @@
+METHOD class_constructor.
+
+* Old SELECT from /lrn/airport is now redundant
+*    SELECT
+*      FROM /lrn/airport
+*    FIELDS airport_id, timzone
+*      INTO TABLE @DATA(airports).
+
+  SELECT
+    FROM /lrn/connection AS c
+    LEFT OUTER JOIN /lrn/airport AS f
+      ON c~airport_from_id = f~airport_id
+    LEFT OUTER JOIN /lrn/airport AS t
+      ON c~airport_to_id = t~airport_id
+    FIELDS
+      c~carrier_id,
+      c~connection_id,
+      c~airport_from_id,
+      c~airport_to_id,
+      c~departure_time,
+      c~arrival_time,
+      f~timzone AS timzone_from,
+      t~timzone AS timzone_to
+    INTO TABLE @connections_buffer.
+
+  LOOP AT connections_buffer ASSIGNING FIELD-SYMBOL(<connection>).
+
+    DATA(today) = cl_abap_context_info=>get_system_date( ).
+
+    CONVERT DATE today
+            TIME <connection>-departure_time
+            TIME ZONE <connection>-timzone_from
+            INTO UTCLONG DATA(departure_utclong).
+
+    CONVERT DATE today
+            TIME <connection>-arrival_time
+            TIME ZONE <connection>-timzone_to
+            INTO UTCLONG DATA(arrival_utclong).
+
+    <connection>-duration =
+      cl_abap_tstmp=>subtract(
+        tstmp1 = arrival_utclong
+        tstmp2 = departure_utclong ).
+
+  ENDLOOP.
+
+ENDMETHOD.
