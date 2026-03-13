@@ -1,0 +1,45 @@
+CLASS zcl_7245_structure DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_7245_structure IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+    DATA address TYPE z7245s_address.
+    address-street      = 'Dietmar-Hopp-Allee 16'.
+    address-postal_code = '69190'.
+    address-city        = 'Walldorf'.
+    address-country     = 'DE'.
+
+    DATA person TYPE z7245s_person.
+    person-name-first_name     = 'Dictionary'.
+    person-name-last_name      = 'ABAP'.
+    person-address-street      = 'Dietmar-Hopp-Allee 16'.
+    person-address-postal_code = '69190'.
+    person-address-city        = 'Walldorf'.
+    person-address-country     = 'DE'.
+
+    DATA person2 TYPE z7245s_person_inc.
+    person2-name-first_name     = 'Dictionary'.
+    person2-name-last_name      = 'ABAP'.
+    person2-address-street      = 'Dietmar-Hopp-Allee 16'.
+    person2-address-postal_code = '69190'.
+    person2-address-city        = 'Walldorf'.
+    person2-address-country     = 'DE'.
+    person2-first_name  = 'Dictionary'.
+    person2-last_name   = 'ABAP'.
+    person2-street      = 'Dietmar-Hopp-Allee 16'.
+    person2-postal_code = '69190'.
+    person2-city        = 'Walldorf'.
+    person2-country     = 'DE'.
+
+    out->write( address ).
+    out->write( person ).
+    out->write( person2 ).
+  ENDMETHOD.
+ENDCLASS.
