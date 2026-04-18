@@ -1,0 +1,25 @@
+CLASS z_abap_cloud_test01 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_oo_adt_classrun .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS z_abap_cloud_test01 IMPLEMENTATION.
+
+  METHOD if_oo_adt_classrun~main.
+  
+  SELECT AgencyID, Name FROM /dmo/c_agencytp INTO TABLE @DATA(It_agency).
+  
+  SELECT matnr FROM mara INTO TABLE @DATA(It_mara).
+
+
+  ENDMETHOD.
+ENDCLASS.
